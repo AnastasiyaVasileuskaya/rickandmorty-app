@@ -1,0 +1,7 @@
+.Card {
+    padding: 20px;
+    background: #eee;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+}
