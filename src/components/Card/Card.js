@@ -11,6 +11,7 @@ export default function Card({
     location,
 }) {
     const [isDetailsVisible, setIsDetailsVisible] = React.useState(false)
+
     return (
         <section className="Card">
             {name} {species === 'Human' ? '👤' : '👽'}
