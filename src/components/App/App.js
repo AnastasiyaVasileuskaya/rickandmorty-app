@@ -7,7 +7,8 @@ import { useEffect } from 'react'
 function App() {
     const [characters, setCharacters] = useState([])
     const [userInput, setUserInput] = useState('')
-    const [filteredStatus, setFilteredStatus] = useState('unknown')
+    const [filteredStatus, setFilteredStatus] = useState('all')
+    const [currentPage, setCurrentPage] = useState('Characters')
 
     useEffect(() => {
         getAllCharacters()
@@ -29,28 +30,104 @@ function App() {
     return (
         <div className="App">
             <Header
-                colortext="white"
-                color="cornflowerblue"
-                title="Rick and Morty App"
+                colortext="black"
+                color="white"
+                title="The Rick and Morty App"
             />
-            <button
-                onClick={() => setFilteredStatus('Alive')}
-                disabled={filteredStatus === 'Alive'}
-            >
-                Alive
-            </button>
-            <button
-                onClick={() => setFilteredStatus('Dead')}
-                disabled={filteredStatus === 'Dead'}
-            >
-                Dead
-            </button>
-            <button
-                onClick={() => setFilteredStatus('unknown')}
-                disabled={filteredStatus === 'unknown'}
-            >
+            <Characters hidden={currentPage} />
+            <Location />
+            <Episode />
+            <Navigation />
+            <label>
+                <input
+                    type="radio"
+                    value="Human"
+                    checked={filteredStatus === 'Human'}
+                    onChange={() => setFilteredStatus('Human')}
+                />
+                Human
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Alien"
+                    checked={filteredStatus === 'Alien'}
+                    onChange={() => setFilteredStatus('Alien')}
+                />
+                Alien
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Humanoid"
+                    checked={filteredStatus === 'Humanoid'}
+                    onChange={() => setFilteredStatus('Humanoid')}
+                />
+                Humanoid
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Poopybutthole"
+                    checked={filteredStatus === 'Poopybutthole'}
+                    onChange={() => setFilteredStatus('Poopybutthole')}
+                />
+                Poopybutthole
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Mythological Creature"
+                    checked={filteredStatus === 'Mythological Creature'}
+                    onChange={() => setFilteredStatus('Mythological Creature')}
+                />
+                Mythological Creature
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Disease"
+                    checked={filteredStatus === 'Disease'}
+                    onChange={() => setFilteredStatus('Disease')}
+                />
+                Disease
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Cronenberg"
+                    checked={filteredStatus === 'Cronenberg'}
+                    onChange={() => setFilteredStatus('Cronenberg')}
+                />
+                Cronenberg
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="Animal"
+                    checked={filteredStatus === 'Animal'}
+                    onChange={() => setFilteredStatus('Animal')}
+                />
+                Animal
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="unknown"
+                    checked={filteredStatus === 'unknown'}
+                    onChange={() => setFilteredStatus('unknown')}
+                />
                 Unknown
-            </button>
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="all"
+                    checked={filteredStatus === 'all'}
+                    onChange={() => setFilteredStatus('all')}
+                />
+                All characters
+            </label>
 
             <input
                 value={userInput}
@@ -59,7 +136,11 @@ function App() {
             />
 
             {characters
-                .filter((character) => character.status === filteredStatus)
+                .filter(
+                    (character) =>
+                        filteredStatus === 'all' ||
+                        character.species === filteredStatus
+                )
                 .filter((character) =>
                     character.name
                         .toLowerCase()
@@ -71,10 +152,8 @@ function App() {
                         name={character.name}
                         species={character.species}
                         image={character.image}
-                        status={character.status}
                         gender={character.gender}
                         origin={character.origin.name}
-                        location={character.location.name}
                     />
                 ))}
         </div>
