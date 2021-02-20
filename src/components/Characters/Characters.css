@@ -1,0 +1,7 @@
+.Characters {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: #eee;
+    overflow-y: scroll;
+}

@@ -14,7 +14,7 @@ export default function Card({
 
     return (
         <section className="Card">
-            {name} {species === 'Human' ? '👤' : '👽'}
+            <h2>{name}</h2> {species === 'Human' ? '👤' : '👽'}
             <img src={image} alt="" />
             <button
                 onClick={(event) => {
