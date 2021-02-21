@@ -1,28 +1,14 @@
-import './Characters.css'
+import './Liked.css'
 import Card from '../Card/Card'
 
-export default function Characters({
-  title,
-  hidden,
-  characters,
-  filteredStatus,
-  userInput,
-  setLiked,
-}) {
+export default function Liked({ title, hidden, characters, setLiked }) {
   if (hidden) {
     return null
   }
   return (
-    <div className="Characters" hidden={hidden}>
+    <div className="Liked" hidden={hidden}>
       {characters
-        .filter(
-          character =>
-            filteredStatus === 'All characters' ||
-            character.species === filteredStatus
-        )
-        .filter(character =>
-          character.name.toLowerCase().includes(userInput.toLowerCase())
-        )
+        .filter(character => character.isLiked)
         .map(character => (
           <Card
             key={character.id}

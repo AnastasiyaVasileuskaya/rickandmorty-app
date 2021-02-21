@@ -1,11 +1,32 @@
-import './CharacterFilterByStatus.css'
+export default function Dropdown({ setFilteredStatus, characters, hidden }) {
+  const items = ['All characters']
+  items.push(...new Set(characters.map(ch => ch.species)))
+  /*
+  const items = [
+    {
+      label: 'Human',
+      value: 'Human',
+    },
+    { label: 'Alien', value: 'Alien' },
+    { label: 'Humanoid', value: 'Humanoid' },
+    { label: 'all', value: 'all' },
+  ]
+  */
+  if (hidden) {
+    return null
+  }
+  return (
+    <select onChange={e => setFilteredStatus(e.target.value)}>
+      {items.map(item => (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      ))}
+    </select>
+  )
+}
 
-export default function CharacterFilterByStatus({
-    filteredStatus,
-    setFilteredStatus,
-}) {
-    return (
-        <div className="CharacterFilterByStatus">
+/* <div className="CharacterFilterByStatus">
             <label>
                 <input
                     type="radio"
@@ -97,5 +118,4 @@ export default function CharacterFilterByStatus({
                 All characters
             </label>
         </div>
-    )
-}
+*/

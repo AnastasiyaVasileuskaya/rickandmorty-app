@@ -1,35 +1,41 @@
 import './Card.css'
-import React from 'react'
+import { useState } from 'react'
+import { ReactComponent as LikeSVG } from '@fortawesome/fontawesome-free/svgs/solid/heart.svg'
+import { ReactComponent as UnlikeSVG } from '@fortawesome/fontawesome-free/svgs/regular/heart.svg'
 
 export default function Card({
-    name,
-    species,
-    image,
-    status,
-    gender,
-    origin,
-    location,
+  id,
+  name,
+  image,
+  status,
+  gender,
+  isLiked,
+  setLiked,
 }) {
-    const [isDetailsVisible, setIsDetailsVisible] = React.useState(false)
+  const like = <LikeSVG className="Card__like" />
+  const unlike = <UnlikeSVG className="Card__like" />
 
-    return (
-        <section className="Card">
-            <h2>{name}</h2> {species === 'Human' ? '👤' : '👽'}
-            <img src={image} alt="" />
-            <button
-                onClick={(event) => {
-                    event.stopPropagation()
-                    setIsDetailsVisible(!isDetailsVisible)
-                }}
-            >
-                {isDetailsVisible ? 'Hide details' : 'Show details'}
-            </button>
-            {isDetailsVisible && (
-                <p>
-                    {status} <br></br> {gender} <br></br> {origin} <br></br>
-                    {location}
-                </p>
-            )}
-        </section>
-    )
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false)
+
+  return (
+    <section className="Card">
+      <h2>{name}</h2>
+      <span onClick={() => setLiked(id - 1)}>{isLiked ? like : unlike}</span>
+      <img src={image} alt="" />
+      <button
+        onClick={event => {
+          event.stopPropagation()
+          setIsDetailsVisible(!isDetailsVisible)
+        }}
+      >
+        {isDetailsVisible ? 'Hide details' : 'Show details'}
+      </button>
+      {isDetailsVisible && (
+        <p>
+          Status: {status} <br />
+          Gender: {gender}
+        </p>
+      )}
+    </section>
+  )
 }
