@@ -6,7 +6,7 @@ export default function Header({ title, colortext, color }) {
             style={{ color: colortext, backgroundColor: color }}
             className="Header"
         >
-            {title}
+            <h1>{title}</h1>
         </header>
     )
 }

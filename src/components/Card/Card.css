@@ -1,7 +1,31 @@
 .Card {
-    padding: 20px;
-    background: #eee;
-    border-radius: 8px;
-    display: grid;
-    place-items: center;
+  background: lightblue;
+  border-radius: 8px;
+  display: grid;
+  padding: 20px;
+  margin: 15px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 8px #0006;
+  width: auto;
+}
+
+.Card img {
+  border-radius: 50%;
+}
+
+.Card button {
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+  height: 30px;
+}
+
+.Card__like {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  fill: red;
+  width: 30px;
+  height: 30px;
 }

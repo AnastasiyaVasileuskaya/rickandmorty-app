@@ -1,84 +1,78 @@
-import Card from '../Card/Card'
-import Header from '../Header/Header'
 import './App.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
+import Header from '../Header/Header'
+import Characters from '../Characters/Characters'
+import Liked from '../Liked/Liked'
+import Navigation from '../Navigation/Navigation'
+import Grid from '../Grid/Grid'
+import CharacterSearch from '../CharacterSearch/CharacterSearch'
+import Dropdown from '../Dropdown/Dropdown'
+
 function App() {
-    const [characters, setCharacters] = useState([])
-    const [userInput, setUserInput] = useState('')
-    const [filteredStatus, setFilteredStatus] = useState('unknown')
+  const [characters, setCharacters] = useState([])
+  const [userInput, setUserInput] = useState('')
+  const [filteredStatus, setFilteredStatus] = useState('all')
+  const [currentPage, setCurrentPage] = useState('Characters')
 
-    useEffect(() => {
-        getAllCharacters()
-    }, [])
+  useEffect(() => {
+    getAllCharacters()
+  }, [])
 
-    function getAllCharacters(
-        url = 'https://rickandmortyapi.com/api/character'
-    ) {
-        fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-                setCharacters((oldState) => [...oldState, ...data.results])
+  function getAllCharacters(url = 'https://rickandmortyapi.com/api/character') {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setCharacters(oldState => [...oldState, ...data.results])
+        const nextUrl = data.info.next
+        nextUrl && getAllCharacters(nextUrl)
+      })
+  }
 
-                const nextUrl = data.info.next
-                nextUrl && getAllCharacters(nextUrl)
-            })
-    }
+  function setLiked(index) {
+    // we need:
+    // slice, spread operator, index
+    const currentCharacter = characters[index]
 
-    return (
-        <div className="App">
-            <Header
-                colortext="white"
-                color="cornflowerblue"
-                title="Rick and Morty App"
-            />
-            <button
-                onClick={() => setFilteredStatus('Alive')}
-                disabled={filteredStatus === 'Alive'}
-            >
-                Alive
-            </button>
-            <button
-                onClick={() => setFilteredStatus('Dead')}
-                disabled={filteredStatus === 'Dead'}
-            >
-                Dead
-            </button>
-            <button
-                onClick={() => setFilteredStatus('unknown')}
-                disabled={filteredStatus === 'unknown'}
-            >
-                Unknown
-            </button>
+    setCharacters([
+      ...characters.slice(0, index),
+      { ...currentCharacter, isLiked: !currentCharacter.isLiked },
+      ...characters.slice(index + 1),
+    ])
+  }
 
-            <input
-                value={userInput}
-                onChange={(event) => setUserInput(event.target.value)}
-                placeholder="Filter name"
-            />
+  if (characters.length === 0) {
+    return null
+  }
 
-            {characters
-                .filter((character) => character.status === filteredStatus)
-                .filter((character) =>
-                    character.name
-                        .toLowerCase()
-                        .includes(userInput.toLowerCase())
-                )
-                .map((character) => (
-                    <Card
-                        key={character.id}
-                        name={character.name}
-                        species={character.species}
-                        image={character.image}
-                        status={character.status}
-                        gender={character.gender}
-                        origin={character.origin.name}
-                        location={character.location.name}
-                    />
-                ))}
-        </div>
-    )
+  return (
+    <Grid>
+      <Header title="The Rick and Morty App" color="lightblue" />
+      <div className="App">
+        <Dropdown
+          hidden={currentPage !== 'Characters'}
+          characters={characters}
+          setFilteredStatus={setFilteredStatus}
+        />
+
+        <CharacterSearch
+          hidden={currentPage !== 'Characters'}
+          userInput={userInput}
+          setUserInput={setUserInput}
+        />
+        <Characters
+          characters={characters}
+          hidden={currentPage !== 'Characters'}
+          filteredStatus={filteredStatus}
+          userInput={userInput}
+          setLiked={setLiked}
+        />
+        <Liked characters={characters} hidden={currentPage !== 'Liked'} />
+      </div>
+      <Navigation activeButton={currentPage} onNavigate={setCurrentPage} />
+    </Grid>
+  )
 }
 
 export default App
