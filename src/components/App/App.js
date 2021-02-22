@@ -13,7 +13,7 @@ import Dropdown from '../Dropdown/Dropdown'
 function App() {
   const [characters, setCharacters] = useState([])
   const [userInput, setUserInput] = useState('')
-  const [filteredStatus, setFilteredStatus] = useState('All characters')
+  const [filteredStatus, setFilteredStatus] = useState('Human')
   const [currentPage, setCurrentPage] = useState('Characters')
 
   useEffect(() => {
