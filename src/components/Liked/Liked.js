@@ -1,7 +1,7 @@
 import './Liked.css'
 import Card from '../Card/Card'
 
-export default function Liked({ title, hidden, characters, setLiked }) {
+export default function Liked({ hidden, characters, setLiked }) {
   if (hidden) {
     return null
   }
