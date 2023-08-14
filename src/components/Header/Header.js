@@ -1,9 +1,10 @@
 import './Header.css'
 
-export default function Header({ title, colortext, color }) {
+export default function Header({title, color}) {
     return (
         <header
-            style={{ color: colortext, backgroundColor: color }}
+            data-cy="header"
+            style={{backgroundColor: color}}
             className="Header"
         >
             <h1>{title}</h1>
